@@ -19,19 +19,19 @@ func getServiceWriter() (io.WriteCloser, error) {
 func installServicePlatformSpecific(unit string) error {
 
 	cmdReload := exec.Command("systemctl", "daemon-reload")
-	err := cmdReload.Run()
+	_ = cmdReload.Run()
 	if cmdReload.ProcessState.Success() {
 		return fmt.Errorf("Failed to reload daemon")
 	}
 
 	cmdEnable := exec.Command("systemctl", "enable", unit)
-	err = cmdEnable.Run()
+	_ = cmdEnable.Run()
 	if cmdEnable.ProcessState.Success() {
 		return fmt.Errorf("Failed to install service")
 	}
 
 	cmdRestart := exec.Command("systemctl", "restart", unit)
-	err = cmdRestart.Run()
+	_ = cmdRestart.Run()
 
 	if cmdRestart.ProcessState.Success() {
 		return nil
