@@ -85,6 +85,7 @@ func stop(reason string) {
 }
 
 func reload() {
+
 	Reloading()
 	log.Println("Nothing to reload")
 	Ready()
