@@ -12,7 +12,7 @@ import (
 )
 
 func main() {
-	log.Println("Starting watchdog application")
+	log.Println("Starting watchdog application .")
 
 	installExecutable := flag.Bool("install-bin", false, fmt.Sprintf("install current executable to: %v", WatchdogExecutablePath))
 	installService := flag.Bool("install-service", false, "install executing assembly as systemd service unit (watchdog.service)")

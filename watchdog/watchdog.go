@@ -6,16 +6,9 @@ import (
 	"time"
 )
 
-// UpsLedBlink The gpio for led blink
-const UpsLedBlink = 134
-
-// UpsFailLedBlink The gpio for led blik on failure
-const UpsFailLedBlink = 135
-
 // WatchdogCheck func
 func WatchdogCheck() {
-
-	BlinkLed(UpsLedBlink, 2500*time.Millisecond)
+	BlinkLed(LedUpsGreen, 3*time.Second)
 	softLockup()
 	CheckNetwork()
 }
@@ -27,7 +20,8 @@ func softLockup() {
 		log.Println("Soft lockup request performing now be prepared for watchdog system reset ...")
 
 		for {
-			BlinkLed(UpsFailLedBlink, 1*time.Second)
+			BlinkLed(LedUpsRed, 1*time.Second)
+			time.Sleep(500 * time.Millisecond)
 		}
 	}
 
