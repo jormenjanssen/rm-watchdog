@@ -11,6 +11,11 @@ import (
 
 // Trace function
 func Trace() {
+
+	if _, err := os.Stat(TraceDir); os.IsNotExist(err) {
+		os.Mkdir(TraceDir, 0666)
+	}
+
 	writeSignOfLife(getFilename(TraceDir))
 }
 

@@ -3,4 +3,4 @@
 package main
 
 // TraceDir directory
-const TraceDir = "/data/apps/"
+const TraceDir = "/data/apps/watchdog/traces"
