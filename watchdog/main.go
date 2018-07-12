@@ -52,7 +52,7 @@ func main() {
 
 	// Main watchdog loop
 	go func() {
-		tick := time.Tick(30 * time.Second)
+		tick := time.Tick(20 * time.Second)
 		for {
 			<-tick
 			Watchdog()
