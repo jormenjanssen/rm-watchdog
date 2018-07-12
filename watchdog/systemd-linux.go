@@ -13,7 +13,7 @@ import (
 var WatchdogExecutablePath = "/usr/bin/watchdog"
 
 func getServiceWriter() (io.WriteCloser, error) {
-	return os.OpenFile("/etc/sytemd/watchdog.service", os.O_CREATE|os.O_RDWR|os.O_TRUNC, 0666)
+	return os.OpenFile("/etc/systemd/watchdog.service", os.O_CREATE|os.O_RDWR|os.O_TRUNC, 0666)
 }
 
 func installServicePlatformSpecific(unit string) error {
