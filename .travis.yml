@@ -1,10 +1,8 @@
 language: go
-
 env:
 - GIMME_OS=linux GIMME_ARCH=arm GIMME_GOARM=7
 go:
 - '1.10'
-
 script:
 - export ARCH=arm
 - export ARM=7
@@ -12,10 +10,9 @@ script:
 - go build
 after_script:
 - ls -l $HOME/gopath/src/github.com/jormenjanssen/rm-watchdog
-
 deploy:
   provider: releases
   api_key:
-    secure: pJzRZQFlQ7uTPpIlZzcMwfxktkhB3uEIpGhudiuHURtBZLUMp/ObX51Z4UoEBkr4OSz/Wkg+1JH7B9SjVraVeEG7EJK9wWTMZn8J9hFwbfbX6g5Sat7YxSQAUzoupPY/9f7UQzfGn9RUlKH9TiaKgN3YqM6MS3+C/2RKfq/iW89Vx2c1gBlGsHh0eLghi5jWFzReXZifcs3G3w8QjWUAlpW76xV6CVSCTKLeyXVwDkdHoxEIpo8QnoaGV1m2ZsdZ6Ok0jBPPiuYoFBlWeh1YVpirq4sFKwzrQyjE03itovvliqhkD36kcLmNXZF0UoA4xABWRWiONhRMQWxpjLceKOoDY+7dcn7MLOFfcTUZ1rpru4Nsg2oRQKovLgQD9gc6VOPF1siEhQNIuFn/udTqwOG40iRNoqnrfyjiNkfLnvjrzWVBzTXXpGVqkUw2LZ2m8SyvrcUf3UEWTE70mqtoQR5+MXpdNjUPXF8WuMF0hE00QbHS9Padqmi7dj/eBpqdWQOlF60KwSOT/8hSFePud46JAD7cAm/UbsV5lRi+FtUm6qoOaA6xCPRGf86x79VX38Q5p27Rxl28SXnp7RQk1DMnBnEtcTCvfzMF3Caq/jnyWd5AS6/BXriP3D26ruibD2eC3ekw9uyAZ5eF3IzFCWyI3aOQmqETFWALRmCJAkM=
-  file: rm-watchdog
+    secure: iN6l33xueZf4UQ92s5yjvjL4uO/sPrfB2qNXA40pKPsg4TdaZRAcYJwg99kjTc8Vf9jLNjxALVhAPCBAggUU1qfk7vNtJ8YS9FHbKNdJm88pV/t7uY2EaH03d6fl5QUOAAjrmG+wLA73gHKq4VIXaipcdVJ2Y2upcuVhf/CrL3r9rJLmO6lIxaXarlmav8tm9k6vktQ/Or9QH3TK6bU9MQTn1VH1CRioZ5Ji6JoB6y7RE5CETVA3BODzLET4CkCXyEG09MCyFrmQ8G06MF0HKcMSLQvt+SyU4gL1pszksXqzQTZbtofrrBKBcqeb9LyqLfFly5E5Hrg9z4C9mzePUSd6joR/4iaCvpmBTwyC+GsYV2KEzLBLfNXRqxg24mWN7N1qfwlrX8dmaTrufAIJE73KI9TMriLfKOpKKSDb0hcFK5AN2FmybYnQjLdHqT8jr+19I4uR45oHH+i3Kf2ZS+mWskSPgUX99hxrkOfgKcVV4y8QVirbKS548Fnrq5/+gbdshXhQF1ha2qgDkD25IH4TSNeGXoe2RiCRDln1Cbb/FdQF6GAUu7l2ep+uPMyT6yh12IBM1ulL4JbL2xa46Rco/RzmNJkAjm3MbesK1PKdhcTn0PV50QVh6RMP1fOiKjTXe/KIP7dpf5/qlnNG8xrb0VcJSpvCDRec8v1Eh0Q=
+  file: watchdog
   skip_cleanup: true
