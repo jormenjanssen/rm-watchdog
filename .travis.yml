@@ -6,7 +6,7 @@ go:
 script:
 - export ARCH=arm
 - export ARM=7
-- cd monitor
+- cd watchdog
 - go build
 after_script:
 - ls -l $HOME/gopath/src/github.com/jormenjanssen/rm-watchdog
