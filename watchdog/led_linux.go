@@ -1,3 +1,5 @@
+//+build linux
+
 package main
 
 import "errors"
@@ -5,42 +7,21 @@ import "errors"
 var gpioMapping map[ManagerGpio]Pin
 var errGpioNotInitialized = errors.New("gpio not inialized")
 
-func LedOn(pin ManagerGpio) {
-	gpioFunc(pin, func(p) {
+// LedOn turns on led
+func LedOn(pin ManagerGpio) error {
+	return gpioFunc(pin, func(p Pin) error {
 		return p.High()
 	})
 }
 
-func LedOff(pin ManagerGpio) {
-	gpioFunc(pin, func(p) {
+// LedOff turns off led
+func LedOff(pin ManagerGpio) error {
+	return gpioFunc(pin, func(p Pin) error {
 		return p.Low()
 	})
 }
 
-func gpioFunc(gpio ManagerGpio, fn func(Pin) error) error {
-
-	// First look if we're setup.
-	err := setup()
-	if err != nil {
-		return err
-	}
-
-	// Try to get our pin value.
-	pin, err := GetPin(gpio)
-
-	if err != nil {
-		return err
-	}
-
-	// Execute our closure.
-	return fn(pin)
-}
-
 func setup() error {
-
-	if !IsTargetDevice() {
-		return errGpioNotInitialized
-	}
 
 	if gpioMapping != nil {
 		return nil
@@ -63,7 +44,7 @@ func gpioFunc(gpio ManagerGpio, fn func(Pin) error) error {
 	}
 
 	// Try to get our pin value.
-	pin, err := GetPin(gpio)
+	pin, err := getPin(gpio)
 
 	if err != nil {
 		return err
