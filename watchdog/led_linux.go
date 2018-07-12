@@ -28,8 +28,8 @@ func setup() error {
 	}
 
 	gpioMapping = map[ManagerGpio]Pin{
-		LedUpsGreen: NewOutput(uint(LedUpsGreen), true),
-		LedUpsRed:   NewOutput(uint(LedUpsRed), true),
+		LedUpsGreen: NewOutput(uint(LedUpsGreen), false),
+		LedUpsRed:   NewOutput(uint(LedUpsRed), false),
 	}
 
 	return nil
