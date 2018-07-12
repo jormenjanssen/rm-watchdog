@@ -17,17 +17,9 @@ const (
 // BlinkLed turn the led on for a short period then turns is back off
 func BlinkLed(pin ManagerGpio, duration time.Duration) error {
 
-	err := LedOn(pin)
-	if err != nil {
-		return err
-	}
-
+	_ = LedOn(pin)
 	time.Sleep(duration)
-	err = LedOff(pin)
-
-	if err != nil {
-		return err
-	}
+	_ = LedOff(pin)
 
 	return nil
 }
