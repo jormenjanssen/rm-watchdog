@@ -12,7 +12,9 @@ import (
 // Trace function
 func Trace() {
 
-	if _, err := os.Stat(TraceDir); os.IsNotExist(err) {
+	_, err := os.Stat(TraceDir)
+
+	if err != nil {
 		os.Mkdir(TraceDir, 0666)
 	}
 
