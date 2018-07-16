@@ -23,6 +23,7 @@ func InstallService(enableCleanup bool) error {
 	defer writer.Close()
 
 	writeServiceFile(writer, enableCleanup)
+	installServicePlatformSpecific("watchdog")
 
 	return nil
 }
@@ -82,7 +83,7 @@ func writeServiceFile(writer io.Writer, enableCleanup bool) {
 	bufWriter.WriteString(fmt.Sprintln("WatchdogSec=60s"))
 	bufWriter.WriteString(fmt.Sprintln("Restart=on-failure"))
 	bufWriter.WriteString(fmt.Sprintln("StartLimitInterval=3min"))
-	bufWriter.WriteString(fmt.Sprintln("StartLimitBurst=3"))
+	bufWriter.WriteString(fmt.Sprintln("StartLimitBurst=2"))
 	bufWriter.WriteString(fmt.Sprintln("StartLimitAction=reboot-force"))
 	bufWriter.WriteString(fmt.Sprintln("TimeoutStartSec=1min"))
 

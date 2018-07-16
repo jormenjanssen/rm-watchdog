@@ -56,9 +56,9 @@ func main() {
 
 		for {
 			<-tick
-			Watchdog()
 			WatchdogCheck()
 			Trace()
+			Watchdog()
 
 			if initial {
 				initial = false
