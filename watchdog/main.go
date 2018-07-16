@@ -12,8 +12,6 @@ import (
 )
 
 func main() {
-	log.Println("Starting watchdog application .")
-
 	installExecutable := flag.Bool("install-bin", false, fmt.Sprintf("install current executable to: %v", WatchdogExecutablePath))
 	installService := flag.Bool("install-service", false, "install executing assembly as systemd service unit (watchdog.service)")
 	patchSystemd := flag.Bool("enable-system-watchdog", false, "patch the systemd system file (/etc/systemd/system.conf)")
@@ -48,18 +46,30 @@ func main() {
 		log.Println("Patching systemd config to enable watchdog")
 	}
 
-	Ready()
+	log.Println("Starting watchdog application .")
+	var readyChan = make(chan int)
 
 	// Main watchdog loop
-	go func() {
+	go func(c chan int) {
+		initial := true
 		tick := time.Tick(20 * time.Second)
+
 		for {
 			<-tick
 			Watchdog()
 			WatchdogCheck()
 			Trace()
+
+			if initial {
+				initial = false
+				readyChan <- 0
+			}
 		}
-	}()
+	}(readyChan)
+
+	// Signal only when we reported ready
+	<-readyChan
+	Ready()
 
 	log.Println("Watchdog application is started")
 
