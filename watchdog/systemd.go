@@ -71,7 +71,7 @@ func writeServiceFile(writer io.Writer, enableCleanup bool) {
 	bufWriter.WriteString(fmt.Sprintln("[Unit]"))
 	bufWriter.WriteString(fmt.Sprintln("Description=Watchdog daemon"))
 
-	bufWriter.WriteString(fmt.Sprintln("[service]"))
+	bufWriter.WriteString(fmt.Sprintln("[Service]"))
 
 	if enableCleanup {
 		bufWriter.WriteString(fmt.Sprintln("ExecStart=/usr/bin/watchdog"))
@@ -83,7 +83,10 @@ func writeServiceFile(writer io.Writer, enableCleanup bool) {
 	bufWriter.WriteString(fmt.Sprintln("Restart=on-failure"))
 	bufWriter.WriteString(fmt.Sprintln("StartLimitInterval=3min"))
 	bufWriter.WriteString(fmt.Sprintln("StartLimitBurst=3"))
-	bufWriter.WriteString(fmt.Sprintln("StartLimitBurst=3"))
+	bufWriter.WriteString(fmt.Sprintln("StartLimitAction=reboot-force"))
+
+	bufWriter.WriteString(fmt.Sprintln("[Install]"))
+	bufWriter.WriteString(fmt.Sprintln("WantedBy=multi-user.target"))
 
 	bufWriter.Flush()
 }
