@@ -50,7 +50,7 @@ func CopyExecuteable() error {
 
 	defer from.Close()
 
-	to, err := os.OpenFile(WatchdogExecutablePath, os.O_RDWR|os.O_CREATE, 0666)
+	to, err := os.OpenFile(WatchdogExecutablePath, os.O_RDWR|os.O_CREATE, 0777)
 
 	if err != nil {
 		log.Fatal(err)
