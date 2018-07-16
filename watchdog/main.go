@@ -46,7 +46,7 @@ func main() {
 		log.Println("Patching systemd config to enable watchdog")
 	}
 
-	log.Println("Starting watchdog application .")
+	log.Println("Starting watchdog application")
 	var readyChan = make(chan int)
 
 	// Main watchdog loop
