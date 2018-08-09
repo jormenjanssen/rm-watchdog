@@ -6,44 +6,19 @@ import (
 	"log"
 	"os"
 	"os/signal"
-	"path"
 	"syscall"
 	"time"
 )
 
 func main() {
-	installExecutable := flag.Bool("install-bin", false, fmt.Sprintf("install current executable to: %v", WatchdogExecutablePath))
-	installService := flag.Bool("install-service", false, "install executing assembly as systemd service unit (watchdog.service)")
-	patchSystemd := flag.Bool("enable-system-watchdog", false, "patch the systemd system file (/etc/systemd/system.conf)")
-	disableCleanup := flag.Bool("disable-cleanup", false, fmt.Sprintf("disables removing trace file on cleanup at: %v", TraceDir))
-	WatchdogExecutablePath = *flag.String("bin-path", path.Clean(WatchdogExecutablePath), "specifies executable path for installation")
+
+	enableCleanup := flag.Bool("enable-cleanup", false, fmt.Sprintf("Disables removing trace file on cleanup at: %v", TraceDir))
+	enableTrace := flag.Bool("enable-trace", false, fmt.Sprint("Enables tracing of watchdog data"))
 
 	flag.Parse()
 
-	if !*disableCleanup {
+	if !*enableCleanup {
 		RemoveOldSignOfLifeTraces(TraceDir)
-	}
-
-	if *installService == true {
-		log.Println("Installing watchdog as Systemd service unit")
-		err := InstallService(!*disableCleanup)
-		if err != nil {
-			log.Fatalf("Failed to install: %v", err)
-		}
-		stop("service install completed")
-	}
-
-	if *installExecutable == true {
-		log.Println(fmt.Sprintf("Installing watchdog executable in: %v", WatchdogExecutablePath))
-		err := CopyExecuteable()
-		if err != nil {
-			log.Fatalf("failed to copy executeable: %v", err)
-		}
-		stop("stand-alone install completed")
-	}
-
-	if *patchSystemd == true {
-		log.Println("Patching systemd config to enable watchdog")
 	}
 
 	log.Println("Starting watchdog application")
@@ -55,9 +30,18 @@ func main() {
 		tick := time.Tick(20 * time.Second)
 
 		for {
+			// Wait for tick.
 			<-tick
+
+			// Perform OS watchdog loop
 			WatchdogCheck()
-			Trace()
+
+			// Trace
+			if *enableTrace {
+				Trace()
+			}
+
+			// Notify the process watchdog
 			Watchdog()
 
 			if initial {
@@ -79,7 +63,7 @@ func main() {
 		if sig == syscall.SIGHUP {
 			reload()
 		} else {
-			stop(fmt.Sprintf("requested by signal: %v", sig))
+			stop(fmt.Sprintf("Requested by signal: %v", sig))
 			break
 		}
 	}
@@ -95,7 +79,6 @@ func stop(reason string) {
 }
 
 func reload() {
-
 	Reloading()
 	log.Println("Nothing to reload")
 	Ready()

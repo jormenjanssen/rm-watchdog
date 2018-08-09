@@ -4,3 +4,8 @@ package main
 func CheckNetwork() {
 	checkNetworkStackPlatformSpecific()
 }
+
+// ValidateNetworkConnectivity checks for network connectivity using icmp
+func ValidateNetworkConnectivity() {
+
+}

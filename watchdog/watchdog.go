@@ -8,12 +8,14 @@ import (
 
 // WatchdogCheck func
 func WatchdogCheck() {
-	BlinkLed(LedUpsGreen, 3*time.Second)
-	softLockup()
+	BlinkLed(LedUpsGreen, 2*time.Second)
+	SoftLockup()
 	CheckNetwork()
+	ValidateNetworkConnectivity()
 }
 
-func softLockup() {
+// SoftLockup simulates an software based lockup
+func SoftLockup() {
 	_, err := os.Stat("/var/run/watchdog.lockup")
 	if err == nil {
 		log.Println("Soft lockup request performing now be prepared for watchdog system reset ...")
