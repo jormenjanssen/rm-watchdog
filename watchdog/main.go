@@ -17,7 +17,7 @@ func main() {
 
 	flag.Parse()
 
-	if !*enableCleanup {
+	if *enableCleanup {
 		RemoveOldSignOfLifeTraces(TraceDir)
 	}
 
