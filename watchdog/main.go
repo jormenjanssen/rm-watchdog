@@ -22,6 +22,23 @@ func main() {
 	}
 
 	log.Println("Starting watchdog application")
+
+	// Enable reboot on kernel panic support
+	f, err := os.OpenFile("/proc/sys/kernel/panic", os.O_WRONLY, 0666)
+
+	if err != nil {
+		log.Println(fmt.Sprintf("Error while opening /proc/sys/kernel/panic error: %v", err))
+	} else {
+		defer f.Close()
+
+		_, err = f.Write([]byte("5"))
+		if err != nil {
+			log.Println(fmt.Sprintf("Error while writing /proc/sys/kernel/panic error: %v", err))
+		} else {
+			log.Println(fmt.Sprintf(""))
+		}
+	}
+
 	var readyChan = make(chan int)
 
 	// Main watchdog loop
